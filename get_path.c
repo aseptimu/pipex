@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:29:20 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/09 18:01:19 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/10 20:19:42 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ char	*full_path(char *paths, char **cmdargs, char **path)
 	{
 		paths = ft_strjoin(*path, "/");
 		if (!paths)
-			error_exit("Memory allocate error", 1);
+			error_exit("Memory allocate error");
 		cmd = ft_strjoin(paths, cmdargs[0]);
 		if (!cmd)
-			error_exit("Memory allocate error", 1);
+			error_exit("Memory allocate error");
 		if (access(cmd, F_OK) == 0)
 		{		
 			free_split(tmp);
@@ -58,12 +58,12 @@ char	*get_path(char **cmdargs, char **envp)
 	{
 		paths = ft_strjoin("/", cmdargs[0]);
 		if (!paths)
-			error_exit("Memory allocate error", 1);
+			error_exit("Memory allocate error");
 		return (paths);
 	}
 	paths++;
 	path = ft_split(paths, ':');
 	if (!path)
-		error_exit("Memory allocate error", 1);
+		error_exit("Memory allocate error");
 	return (full_path(paths, cmdargs, path));
 }

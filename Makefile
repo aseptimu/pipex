@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIB_NAME)
-	gcc $(OBJS) $(LIB_NAME) -o $(NAME) 
+	$(CC) $(CFLAGS) $(OBJS) $(LIB_NAME) -o $(NAME) 
 
 $(LIB_NAME) : libft ;
 
@@ -24,7 +24,7 @@ libft :
 	$(MAKE) -C $(LIB_SRC)
 
 %.o : %.c
-	gcc -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
 	$(MAKE) -C $(LIB_SRC) clean
