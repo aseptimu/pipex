@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:32:06 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/10 20:58:33 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:34:49 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ static void	find_exec(char **argv, char **envp)
 
 	cmdargs = ft_split(argv[3], ' ');
 	if (cmdargs == NULL)
-		error_exit("string split error for cmdargs command2");
+		error_exit("string split error for cmdargs command2", 1);
 	if (access(cmdargs[0], F_OK) == -1)
 	{
 		path = get_path(cmdargs, envp);
 		if (path == NULL)
-			error_exit("command not found");
+			error_exit("command not found", 127);
 	}
 	else
 	{
 		path = ft_strdup(cmdargs[0]);
 		if (!path)
-			error_exit("Path error");
+			error_exit("Path error", 1);
 	}
 	if (execve(path, cmdargs, envp) == -1)
 	{
 		free(path);
 		free(cmdargs);
-		error_exit("Executing second command fail");
+		error_exit("Executing second command fail", 1);
 	}
 }
 
@@ -46,16 +46,16 @@ void	parent_process(int pipefd[], char **argv, char **envp)
 
 	fd2 = open (argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd2 == -1)
-		error_exit("Open output file fail");
+		error_exit("Open output file fail", 1);
 	if (close(pipefd[1]) == -1)
-		error_exit("Close pipewrite fail in parent process");
+		error_exit("Close pipewrite fail in parent process", 1);
 	if (dup2(fd2, 1) == -1)
-		error_exit("Outputfiledes to stdout dup fail in parent process");
+		error_exit("Outputfiledes to stdout dup fail in parent process", 1);
 	if (close (fd2) == -1)
-		error_exit("Close outputfiledes error in parent process");
+		error_exit("Close outputfiledes error in parent process", 1);
 	if (dup2(pipefd[0], 0) == -1)
-		error_exit("Piperead to stdin duplication fail in parent process");
+		error_exit("Piperead to stdin duplication fail in parent process", 1);
 	if (close(pipefd[0]) == -1)
-		error_exit("Close piperead error in parent process");
+		error_exit("Close piperead error in parent process", 1);
 	find_exec(argv, envp);
 }

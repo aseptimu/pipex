@@ -6,16 +6,16 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:41:13 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/10 20:56:58 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:33:31 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	error_exit(char *message)
+void	error_exit(char *message, int errorcode)
 {
 	perror(message);
-	exit(127);
+	exit(errorcode);
 }
 
 void	free_split(char **string)
@@ -34,15 +34,15 @@ void	free_split(char **string)
 static int	ft_fork(int pipefd[2], pid_t id, char **argv, char **envp)
 {
 	if (pipe(pipefd) == -1)
-		error_exit("Pipe fail");
+		error_exit("Pipe fail", 1);
 	id = fork();
 	if (id == -1)
-		error_exit("Fork fail");
+		error_exit("Fork fail", 1);
 	else if (id == 0)
 		child_process(pipefd, argv, envp);
 	id = fork();
 	if (id == -1)
-		error_exit("Fork fail");
+		error_exit("Fork fail", 1);
 	else if (id == 0)
 		parent_process(pipefd, argv, envp);
 	close(pipefd[0]);
@@ -73,5 +73,6 @@ int	main(int argc, char **argv, char **envp)
 		if (pid == id)
 			ret = status;
 	}
+	printf("%d\n", EXIT_SUCCESS);
 	return (WEXITSTATUS(ret));
 }
