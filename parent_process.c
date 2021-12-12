@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:32:06 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/11 16:34:49 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/12 15:47:17 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	find_exec(char **argv, char **envp)
 	if (execve(path, cmdargs, envp) == -1)
 	{
 		free(path);
-		free(cmdargs);
+		free_split(cmdargs);
 		error_exit("Executing second command fail", 1);
 	}
 }
