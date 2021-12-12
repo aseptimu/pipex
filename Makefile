@@ -11,6 +11,8 @@ OBJS = $(patsubst %.c, %.o, $(SRCS))
 
 CC = gcc
 
+HEADER = pipex.h
+
 CFLAGS = -Wall -Wextra -Werror
 
 all : $(NAME)
@@ -23,7 +25,7 @@ $(LIB_NAME) : libft ;
 libft :
 	$(MAKE) -C $(LIB_SRC)
 
-%.o : %.c
+%.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
