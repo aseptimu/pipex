@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:41:13 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/11 16:33:31 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/12 12:14:22 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,5 @@ int	main(int argc, char **argv, char **envp)
 		if (pid == id)
 			ret = status;
 	}
-	printf("%d\n", EXIT_SUCCESS);
 	return (WEXITSTATUS(ret));
 }

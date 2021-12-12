@@ -1,5 +1,7 @@
 NAME = pipex
 
+NAME_BONUS = /bonus/pipex # ??
+
 LIB_NAME = libft/libft.a
 
 LIB_SRC = ./libft
@@ -28,11 +30,13 @@ libft :
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+bonus : $(NAME_BONUS) #??
+
 clean :
 	$(MAKE) -C $(LIB_SRC) clean
 	rm -f $(OBJS)
 
-fclean :
+fclean : clean
 	$(MAKE) -C $(LIB_SRC) fclean
 	rm -f $(NAME)
 
