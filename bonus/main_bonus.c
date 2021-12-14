@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:41:13 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/14 17:08:02 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/14 20:44:11 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	show_me_the_file(t_fd *fd, char **argv, int argc)
 	else
 		fd->fd2 = open(argv[argc - 1], O_RDWR | O_CREAT | O_APPEND, 0644);
 	fd->flag = 0;
+	if (access(argv[argc - 1], W_OK) == -1)
+		error_exit("access denied", 1);
 }
 
 void	ft_fork(t_fd *fd, int argc, char **argv, char **envp)
