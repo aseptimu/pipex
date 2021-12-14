@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:29:20 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/12 12:30:48 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/14 20:53:54 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*get_path(char **cmdargs, char **envp)
 	}
 	if (*envp == NULL)
 	{
-		paths = ft_strjoin("/", cmdargs[0]);
+		paths = ft_strjoin("./", cmdargs[0]);
 		if (!paths)
 			error_exit("Memory allocate error", 1);
 		return (paths);
