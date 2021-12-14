@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 14:41:13 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/13 16:02:10 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:08:02 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@ void	free_split(char **string)
 	free(string);
 }
 
-static void	ft_fork(t_fd *fd, int argc, char **argv, char **envp)
+static void	show_me_the_file(t_fd *fd, char **argv, int argc)
+{
+	if (fd->here_doc == 0)
+		fd->fd2 = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
+	else
+		fd->fd2 = open(argv[argc - 1], O_RDWR | O_CREAT | O_APPEND, 0644);
+	fd->flag = 0;
+}
+
+void	ft_fork(t_fd *fd, int argc, char **argv, char **envp)
 {
 	if (fd->count < argc - 4)
 	{
@@ -40,10 +49,7 @@ static void	ft_fork(t_fd *fd, int argc, char **argv, char **envp)
 		fd->flag = 1;
 	}
 	else
-	{
-		fd->fd2 = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		fd->flag = 0;
-	}
+		show_me_the_file(fd, argv, argc);
 	fd->id = fork();
 	if (fd->id == -1)
 		error_exit ("fork fail", 1);
@@ -73,17 +79,17 @@ int	main(int argc, char **argv, char **envp)
 		ft_putstr_fd("Not enough arguments\n", 1);
 		exit(1);
 	}
-	fd.fd1 = open(argv[1], O_RDONLY);
-	if (dup2(fd.fd1, 0) == -1)
-		error_exit("dup fail", 1);
-	close (fd.fd1);
-	while (fd.count <= argc - 4)
-		ft_fork(&fd, argc, argv, envp);
-	while (fd.pid > 0)
+	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
-		fd.pid = wait(&(fd.status));
-		if (fd.pid == fd.id)
-			ret = fd.status;
+		if (argc-- < 6)
+		{
+			ft_putstr_fd("Not enough arguments\n", 1);
+			exit(1);
+		}
+		fd.here_doc = 1;
+		fd.fd1 = here_doc(fd, &argv, argc);
 	}
-	return (WEXITSTATUS(ret));
+	else
+		fd.fd1 = open(argv[1], O_RDONLY);
+	return (ft_norma_strok(argc, argv, fd, envp));
 }

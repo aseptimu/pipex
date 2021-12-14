@@ -10,7 +10,7 @@ SRCS = main.c parent_process.c child_process.c \
 		get_path.c
 
 SRCS_BONUS = ./bonus/main_bonus.c ./bonus/child_process_bonus.c \
-			./bonus/get_path_bonus.c
+			./bonus/get_path_bonus.c ./bonus/ft_utils_bonus.c
 
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 
