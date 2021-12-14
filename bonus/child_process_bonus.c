@@ -6,7 +6,7 @@
 /*   By: aseptimu <aseptimu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 17:30:50 by aseptimu          #+#    #+#             */
-/*   Updated: 2021/12/13 16:02:47 by aseptimu         ###   ########.fr       */
+/*   Updated: 2021/12/14 20:30:52 by aseptimu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ void	child_process(t_fd *fd, char *argv, char **envp)
 	}
 	else
 	{
-		dup2(fd->fd2, 1);
-		close(fd->fd2);
+		if (dup2(fd->fd2, 1) == -1)
+			error_exit("dup fail", 1);
+		if (close(fd->fd2) == -1)
+			error_exit("close fail", 1);
 	}
 	find_exec(argv, envp);
 }
