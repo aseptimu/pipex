@@ -32,7 +32,7 @@ $(NAME) : $(OBJS) $(LIB_NAME)
 bonus : $(NAME_BONUS)
 
 $(NAME_BONUS) : $(OBJS_BONUS) $(LIB_NAME)
-	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIB_NAME) -o ./bonus/$(NAME)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIB_NAME) -o $(NAME)
 
 $(LIB_NAME) : libft ;
 
